@@ -1,0 +1,31 @@
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - '-t'
+      - ${_REGION}-docker.pkg.dev/${_PROJECT}/${_REPOSITORY}/${_SERVICE_NAME}:$SHORT_SHA
+      - '--network=cloudbuild'
+      - .
+      - '--progress=plain'
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - ${_REGION}-docker.pkg.dev/${_PROJECT}/${_REPOSITORY}/${_SERVICE_NAME}:$SHORT_SHA
+  - name: gcr.io/cloud-builders/gcloud
+    args:
+      - run
+      - deploy
+      - ${_SERVICE_NAME}
+      - '--project=${_PROJECT}'
+      - '--region=${_REGION}'
+      - '--platform=managed'
+      - '--allow-unauthenticated'
+      - '--cpu-boost'
+      - '--execution-environment=gen2'
+      - '--memory=${_MEMORY}'
+      - '--cpu=${_CPU}'
+      - '--service-account=${_SERVICE_ACCOUNT}'
+      - '--image=${_REGION}-docker.pkg.dev/${_PROJECT}/${_REPOSITORY}/${_SERVICE_NAME}:$SHORT_SHA'
+      - '--port=8000'
+options:
+  logging: CLOUD_LOGGING_ONLY
