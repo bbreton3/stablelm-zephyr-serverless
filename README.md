@@ -14,11 +14,21 @@ The LLM Running is StableLM Zephyr 3B, which is a 3 billion parameters models re
 **Google Cloud SDK**: Ensure you have the Google Cloud SDK installed and configured for your GCP account.
 **Enable Cloud Build**, **Cloud Secret API**, **Artifact Registry** and **Cloud Run APIs**: Make sure the APIs for Cloud Build and Cloud Run are enabled in your GCP project.
 Cloud Build.
-**Create a repository in Artifact Registry**: Create a repository in Artifact Registry to store the Docker image. You can do this from the GCP console or using the gcloud CLI:
+**Create a repository in Artifact Registry**: Create a repository in Artifact Registry to store the Docker image.
 
 **Create a Cloud Build Trigger**: Create a Cloud Build trigger that will build and deploy the service on every push to the main branch of the repository (you will need to conenct your GitHub account to GCP). The trigger should use the cloudbuild.yaml file in the repository.
 
 Here is the configuration for the trigger I have used and that seems to work well:
+
+- **_CONCURRENCY_**: 1
+- **_CPU_**: 8
+- **_MEMORY_**:  4G
+- **_PROJECT**: [YOUR_PROJECT_ID]
+- **_REGION**: [YOUR_REGION]
+- **_REPO_NAME**: [YOUR_ARTIFACT_REGISTRY_REPO_NAME]
+- **_SERVICE_NAME**: [YOUR_CLOUD_RUN_SERVICE_NAME]
+
+
 
 
 
@@ -38,11 +48,8 @@ bash
 Copy code
 curl -X 'GET' \
   'https://[CLOUD_RUN_SERVICE_URL]/complete?user=Hello%20there'
-Local Setup
-To run the service locally, ensure you have Docker installed. Build the Docker image using the provided Dockerfile and run it:
-
-bash
-Copy code
+# Local Setup
+To run the service locally, ensure you have Docker installed. Build the Docker image using the provided Dockerfile and run it, because I use openblas for CPU inference, you might need to run it with the x86_64 architecture if you are on a apple silicon machine.
 docker build -t chatbot-service .
 docker run -p 8000:8000 chatbot-service
 Access the service at http://localhost:8000.
