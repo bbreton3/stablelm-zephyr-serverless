@@ -26,6 +26,8 @@ steps:
       - '--cpu=${_CPU}'
       - '--service-account=${_SERVICE_ACCOUNT}'
       - '--image=${_REGION}-docker.pkg.dev/${_PROJECT}/${_REPOSITORY}/${_SERVICE_NAME}:$SHORT_SHA'
+      - '--concurrency=${_CONCURRENCY}'
       - '--port=8000'
+
 options:
   logging: CLOUD_LOGGING_ONLY
