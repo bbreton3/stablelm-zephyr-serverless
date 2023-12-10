@@ -1,3 +1,3 @@
-huggingface-hub
-uvicorn
-fastapi
+huggingface-hub==0.19.4
+uvicorn==0.24.0
+fastapi==0.104.1

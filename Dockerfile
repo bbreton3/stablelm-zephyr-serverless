@@ -12,7 +12,7 @@ WORKDIR /app
 COPY . /app
 
 # Install llama-cpp-python and other dependencies
-RUN CMAKE_ARGS="-DLLAMA_BLAS=ON -DLLAMA_BLAS_VENDOR=OpenBLAS" pip install llama-cpp-python
+RUN CMAKE_ARGS="-DLLAMA_BLAS=ON -DLLAMA_BLAS_VENDOR=OpenBLAS" pip install llama-cpp-python==0.2.20
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Download the model using Hugging Face CLI
