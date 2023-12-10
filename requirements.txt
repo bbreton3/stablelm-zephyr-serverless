@@ -1,4 +1,3 @@
-llama-cpp-python
 huggingface-hub
 uvicorn
 fastapi

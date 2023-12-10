@@ -1,8 +1,8 @@
 FROM python:3.12-slim
 
-# Update package list, install OpenBLAS, build tools, and other necessary tools
+# Update package list, install OpenBLAS, build tools, pkg-config, and other necessary tools
 RUN apt-get update \
-    && apt-get install -y libopenblas-dev build-essential cmake git \
+    && apt-get install -y libopenblas-dev build-essential cmake git pkg-config \
     && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
@@ -11,7 +11,8 @@ WORKDIR /app
 # Copy the application files
 COPY . /app
 
-# Install Python dependencies
+# Install llama-cpp-python and other dependencies
+RUN CMAKE_ARGS="-DLLAMA_BLAS=ON -DLLAMA_BLAS_VENDOR=OpenBLAS" pip install llama-cpp-python
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Download the model using Hugging Face CLI
