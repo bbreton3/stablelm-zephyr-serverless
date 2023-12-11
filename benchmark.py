@@ -24,7 +24,7 @@ args = parser.parse_args()
 
 
 def send_request(client, question):
-    response = client.get(f"{args.url}?question={question}", timeout=120.0)
+    response = client.get(f"{args.url}/complete?question={question}", timeout=120.0)
     return response
 
 
