@@ -78,8 +78,11 @@ The price for a Cloud run machine in a Tier 1 datacenter is:
 - RAM: $0.00000250 / GiB-second beyond free tier
 
 So for a 8 CPU, 8GB RAM machine, the cost is $0.000212 / second.
+
 This means that the cost per 1000 tokens is $0.000212 / 11.78 * 1000 = $0.018
+
 This is on par with the cost of the GPT-4 API, which is $0.06 per 1000 tokens.
+
 But much more expensive than the GPT-3.5 Turbo API, which is $0.002 per 1000 tokens.
 And the OpenAI Models are much more capable.
 
